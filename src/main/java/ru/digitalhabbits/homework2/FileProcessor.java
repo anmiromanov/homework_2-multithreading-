@@ -51,7 +51,9 @@ public class FileProcessor {
                         String text = pair.getLeft();
                         String countSymbols = pair.getRight().toString();
                         String resultString = text + " " + countSymbols;
-                        exchanger.exchange(resultString);
+                        if (resultString != null){
+                            exchanger.exchange(resultString);
+                        }
                     }
 
                     futureList.clear();
