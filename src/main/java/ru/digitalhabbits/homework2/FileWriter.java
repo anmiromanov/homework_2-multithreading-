@@ -44,9 +44,11 @@ public class FileWriter
             while (!currentThread().isInterrupted()){
                 try {
                     String str = exchanger.exchange(null) + System.lineSeparator();
-                    Files.writeString(resultFilePath, str + System.lineSeparator(), StandardOpenOption.APPEND);
+                    if (!str.isEmpty()) {
+                        Files.writeString(resultFilePath, str, StandardOpenOption.APPEND);
+                    }
                 } catch (InterruptedException | IOException e) {
-                    currentThread().interrupt();
+                    e.printStackTrace();
                 }
             }
 
