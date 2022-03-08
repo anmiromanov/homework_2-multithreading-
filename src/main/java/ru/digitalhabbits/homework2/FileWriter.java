@@ -49,6 +49,7 @@ public class FileWriter
                     }
                 } catch (InterruptedException | IOException e) {
                     e.printStackTrace();
+                    Thread.currentThread().interrupt();
                 }
             }
 
