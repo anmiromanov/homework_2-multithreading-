@@ -41,17 +41,17 @@ public class FileWriter
     @Override
     public void run() {
         logger.info("Started writer thread {}", currentThread().getName());
-        while (!currentThread().isInterrupted()) {
-            try {
-                String exchangeString = exchanger.exchange(null) + System.lineSeparator();
-                if (exchangeString != null) {
-                    Files.writeString(resultFilePath, exchangeString, StandardOpenOption.APPEND);
+            while (!currentThread().isInterrupted()){
+                try {
+                    String exchangeString = exchanger.exchange(null) + System.lineSeparator();
+                    if (exchangeString != null) {
+                        Files.writeString(resultFilePath, exchangeString, StandardOpenOption.APPEND);
+                    }
+                } catch (InterruptedException | IOException e) {
+                    e.printStackTrace();
                 }
-            } catch (InterruptedException | IOException e) {
-                e.printStackTrace();
             }
-        }
-        currentThread().interrupt();
+            //currentThread().interrupt();
 
         logger.info("Finish writer thread {}", currentThread().getName());
     }
