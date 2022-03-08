@@ -36,7 +36,7 @@ public class FileProcessor {
             while (scanner.hasNext()) {
                 tmpList.add(scanner.nextLine());
                 //Согласно условию в коллекции можно хранить не больше CHUNK_SIZE обрабатываемых строк
-                if (tmpList.size() == CHUNK_SIZE){
+                if (tmpList.size() == CHUNK_SIZE || !scanner.hasNext()){
                     for (String str : tmpList){
                         Callable<Pair<String, Integer>> callable = () -> new LineCounterProcessor().process(str);
                         callableList.add(callable);
@@ -51,9 +51,7 @@ public class FileProcessor {
                         String text = pair.getLeft();
                         String countSymbols = pair.getRight().toString();
                         String resultString = text + " " + countSymbols;
-                        if (resultString != null){
-                            exchanger.exchange(resultString);
-                        }
+                        exchanger.exchange(resultString);
                     }
 
                     futureList.clear();
