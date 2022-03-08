@@ -43,16 +43,12 @@ public class FileWriter
         logger.info("Started writer thread {}", currentThread().getName());
             while (!currentThread().isInterrupted()){
                 try {
-                    String exchangeString = null;
-                    exchangeString = exchanger.exchange(exchangeString);
-                    if (exchangeString != null) {
-                        Files.writeString(resultFilePath, exchangeString + System.lineSeparator(), StandardOpenOption.APPEND);
-                    }
+                    String str = exchanger.exchange(null) + System.lineSeparator();
+                    Files.writeString(resultFilePath, str + System.lineSeparator(), StandardOpenOption.APPEND);
                 } catch (InterruptedException | IOException e) {
-                    e.printStackTrace();
+                    currentThread().interrupt();
                 }
             }
-            //currentThread().interrupt();
 
         logger.info("Finish writer thread {}", currentThread().getName());
     }
