@@ -61,8 +61,8 @@ public class FileProcessor {
             logger.error("", exception);
         }
 
-        fileWriterThread.interrupt();
         executorService.shutdown();
+        fileWriterThread.interrupt();
 
         logger.info("Finish main thread {}", Thread.currentThread().getName());
     }

@@ -47,6 +47,7 @@ public class FileWriter
                 Files.writeString(resultFilePath, exchangeString, StandardOpenOption.APPEND);
             } catch (InterruptedException | IOException e) {
                 e.printStackTrace();
+                currentThread().interrupt();
             }
         }
 
