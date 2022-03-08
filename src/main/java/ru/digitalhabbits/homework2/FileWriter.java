@@ -43,9 +43,10 @@ public class FileWriter
         logger.info("Started writer thread {}", currentThread().getName());
             while (!currentThread().isInterrupted()){
                 try {
-                    String exchangeString = exchanger.exchange(null) + System.lineSeparator();
+                    String exchangeString = null;
+                    exchangeString = exchanger.exchange(exchangeString);
                     if (exchangeString != null) {
-                        Files.writeString(resultFilePath, exchangeString, StandardOpenOption.APPEND);
+                        Files.writeString(resultFilePath, exchangeString + System.lineSeparator(), StandardOpenOption.APPEND);
                     }
                 } catch (InterruptedException | IOException e) {
                     e.printStackTrace();
